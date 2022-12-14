@@ -23,11 +23,11 @@ class GoodreadsResource {
         })
         if (result.status !== 200) throw new HttpError(result.status, result.statusText)
         const data = await this.parser.parseStringPromise(result.data)
-        return await this.adaptGoodreadsSearchResults({ data, nextPage: parseInt(page) + 1 })
+        return this.adaptGoodreadsSearchResults({ data, nextPage: parseInt(page) + 1 })
 
     }
 
-    async adaptGoodreadsSearchResults({ data, nextPage }) {
+     adaptGoodreadsSearchResults({ data, nextPage }) {
         const results = data?.GoodreadsResponse?.search[0]?.results[0]?.work?.map(result => {
             return {
                 rating: result.average_rating[0]._ ? result.average_rating[0]._ : result.average_rating[0],
